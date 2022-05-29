@@ -32,6 +32,7 @@ ccm.files[ 'configs.js' ] = {
           ' &nbsp; Ticket: ',
           { tag: 'span', class: 'ticket_hash' },
           { tag: 'span', class: 'extra_buttons' },
+          { tag: 'span', class: 'extra_inputs' },
           { tag: 'span', class: 'extra_charts' },
           { tag: 'img', class: 'entry', src: '%car%', width: '202', height: '74' },
           { tag: 'span', class: 'traffic_light' },
@@ -48,9 +49,14 @@ ccm.files[ 'configs.js' ] = {
       },
       row: { tag: 'tr', inner: [ { tag: 'td', inner: '%nr%' }, { tag: 'td', inner: '%von%' }, { tag: 'td', inner: '%bis%' }, { tag: 'td', inner: '%dauer%' }, { tag: 'td', inner: '%ticket%' }, { tag: 'td', inner: '%preis%' } ] },
       extra_button_div: { inner: [
-          { tag: 'button', class: '%extra_class%', inner: '%extra_inner%', title: '%extra_popup_title%' },
-          { tag: 'span', class: '%extra_class%' }
-        ] },
+        { tag: 'button', class: '%extra_class%', inner: '%extra_inner%', title: '%extra_popup_title%' },
+        { tag: 'span', class: '%extra_class%' }
+      ] },
+      extra_input_div: { inner: [
+        { tag: 'input', class: '%extra_class%', inner: '%extra_inner%', title: '%extra_popup_title%' },
+        { tag: 'button', class: '%extra_class%', inner: '%extra_inner%', title: '%extra_popup_title%' },
+        { tag: 'span', class: '%extra_class%' }
+      ] },
       extra_chart_div: { inner: [
           { tag: 'button', class: '%extra_class%', inner: '%extra_inner%', title: '%extra_popup_title%' },
           { tag: 'input', class: '%extra_class%', type: 'checkbox' },
@@ -58,6 +64,7 @@ ccm.files[ 'configs.js' ] = {
         ] }
     },
     extra_buttons: [],
+    extra_inputs: [],
     extra_charts: [],
     traffic_light: {
       tag: 'svg', viewBox: '0 0 200 500', xmlns: 'http://www.w3.org/2000/svg', width: '40', height: '100', inner: [
@@ -125,6 +132,7 @@ ccm.files[ 'configs.js' ] = {
           ' &nbsp; Ticket: ',
           { tag: 'span', class: 'ticket_hash' },
           { tag: 'span', class: 'extra_buttons' },
+          { tag: 'span', class: 'extra_inputs' },
           { tag: 'span', class: 'extra_charts' },
           { tag: 'img', class: 'entry', src: '%car%', width: '202', height: '74' },
           { tag: 'span', class: 'traffic_light' },
@@ -167,6 +175,14 @@ ccm.files[ 'configs.js' ] = {
         extra_class: 'sum',
         extra_inner: 'Sum',
         extra_popup_title: 'Sum of all parking fees'
+      }
+    ],
+
+    extra_inputs: [
+      {
+        extra_class: 'input',
+        extra_inner: 'Input',
+        extra_popup_title: 'Sample Input'
       }
     ],
 

@@ -68,7 +68,8 @@
                 ' &nbsp; Ticket: ',
                 { tag: 'span', class: 'ticket_hash' }
               ] },
-            { class: 'button_container', inner: [ { tag: 'span', class: 'extra_buttons' } ] },
+              { class: 'button_container', inner: [ { tag: 'span', class: 'extra_buttons' } ] },
+              { class: 'button_container', inner: [ { tag: 'span', class: 'extra_inputs' } ] },
             { class: 'button_container', inner: [ { tag: 'span', class: 'extra_charts' } ] },
             { tag: 'img', class: 'entry', src: '%car%', "width":"80", "height":"30" },
             { tag: 'span', class: 'traffic_light' },
@@ -889,6 +890,35 @@
               if ( extra_button.classList.contains( 'start' ) ){
                 if ( extra_button.classList.length > 1 ) extra_button.classList.remove( 'start' );
                 await csv_get_request( extra_button.classList.toString().replaceAll(/\s/g,'_'), { name: self.name }, extra_span );
+                setTimeout( _=>{ stop(); self.start() }, 800 );
+              } else {
+                await csv_get_request( extra_params.extra_class, { name: self.name }, extra_span );
+              }
+            });
+          });
+        }
+
+        // insert extra input 
+        const extra_inputs = main_elem.querySelector( '.extra_input' );
+        if ( self.extra_input ){
+          self.extra_input.forEach( extra_params => {
+            if ( typeof extra_params === "string" ){
+              const extra_string = extra_params;
+              extra_params = {
+                "extra_class": extra_string,
+                "extra_inner": extra_string,
+                "extra_popup_title": extra_string
+              };
+            }
+            const extra_sub_div = $.html( self.html.extra_input_div, extra_params );
+            extra_inputs.appendChild( extra_sub_div );
+            const extra_input = extra_sub_div.querySelector('input');
+            const extra_button = extra_sub_div.querySelector('button');
+            const extra_span = extra_sub_div.querySelector('span');
+            extra_button.addEventListener('click', async function( e ){
+              if ( extra_button.classList.contains( 'start' ) ){
+                if ( extra_button.classList.length > 1 ) extra_button.classList.remove( 'start' );
+                await csv_get_request( extra_button.classList.toString().replaceAll(/\s/g,'_'), { name: self.name, time: extra_input.inner }, extra_span );
                 setTimeout( _=>{ stop(); self.start() }, 800 );
               } else {
                 await csv_get_request( extra_params.extra_class, { name: self.name }, extra_span );

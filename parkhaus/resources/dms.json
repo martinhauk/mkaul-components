@@ -72,6 +72,7 @@
                                             " &nbsp; Ticket: ",
                                             { "tag": "span", "class": "ticket_hash" },
                                             { "tag": "span", "class": "extra_buttons" },
+                                            { "tag": "span", "class": "extra_inputs" },
                                             { "tag": "span", "class": "extra_charts" },
                                             { "tag": "img", "class": "entry", "src": "%car%", "width": "202", "height": "74" },
                                             { "tag": "span", "class": "traffic_light" },
@@ -115,6 +116,14 @@
                                         "extra_inner": "Sum",
                                         "extra_popup_title": "Sum of all parking fees"
                                     }
+                                ],
+
+                                "extra_inputs": [
+                                  {
+                                    "extra_class": "input",
+                                    "extra_inner": "Input",
+                                    "extra_popup_title": "Sample Input"
+                                  }
                                 ],
 
                                 "extra_charts": [
@@ -276,6 +285,17 @@
                                     }
                                 },
                                 {
+                                    "label": "Extra Inputs",
+                                    "type": "several",
+                                    "info": "Configure List of extra inputs  for your Parkhaus Client",
+                                    "item": {
+                                        "label": "Input %nr%",
+                                        "name": "extra_inputs",
+                                        "type": "json_builder",
+                                        "info": "Structure of this extra input  HTML space"
+                                    }
+                                },
+                                {
                                     "label": "Extra Charts",
                                     "type": "several",
                                     "info": "Configure List of extra charts for your Parkhaus Client",
@@ -423,6 +443,7 @@
                                             " &nbsp; Ticket: ",
                                             { "tag": "span", "class": "ticket_hash" },
                                             { "tag": "span", "class": "extra_buttons" },
+                                            { "tag": "span", "class": "extra_inputs" },
                                             { "tag": "span", "class": "extra_charts" },
                                             { "tag": "img", "class": "entry", "src": "%car%", "width": "202", "height": "74" },
                                             { "tag": "span", "class": "traffic_light" },
@@ -465,6 +486,14 @@
                                         "extra_class": "sum",
                                         "extra_inner": "Sum",
                                         "extra_popup_title": "Sum of all parking fees"
+                                    }
+                                ],
+
+                                "extra_inputs": [
+                                    {
+                                        "extra_class": "input",
+                                        "extra_inner": "Input",
+                                        "extra_popup_title": "Sample input"
                                     }
                                 ],
 
