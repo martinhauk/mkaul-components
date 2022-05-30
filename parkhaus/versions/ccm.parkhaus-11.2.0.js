@@ -5,7 +5,7 @@
  *
  */
 
-( function () {
+ ( function () {
 
   var component  = {
 
@@ -68,8 +68,8 @@
                 ' &nbsp; Ticket: ',
                 { tag: 'span', class: 'ticket_hash' }
               ] },
-              { class: 'button_container', inner: [ { tag: 'span', class: 'extra_buttons' } ] },
-              { class: 'button_container', inner: [ { tag: 'span', class: 'extra_inputs' } ] },
+            { class: 'button_container', inner: [ { tag: 'span', class: 'extra_buttons' } ] },
+            { class: 'button_container', inner: [ { tag: 'span', class: 'extra_inputs' } ] },
             { class: 'button_container', inner: [ { tag: 'span', class: 'extra_charts' } ] },
             { tag: 'img', class: 'entry', src: '%car%', "width":"80", "height":"30" },
             { tag: 'span', class: 'traffic_light' },
@@ -89,9 +89,10 @@
           { tag: 'span', class: '%extra_class%' }
         ] },
         extra_input_div: { inner: [
-          { tag: 'input', class: '%extra_class%', type: 'text' },
+          { tag: 'input', class: '%extra_class%', type: 'text', placeholder: 'Start time ISO formatted' },
+          { tag: 'input', class: '%extra_class%', type: 'text', placeholder: 'End time ISO formatted' },
           { tag: 'button', class: '%extra_class%', inner: '%extra_inner%', title: '%extra_popup_title%' },
-          { tag: 'span', class: '%extra_class%' }
+          { tag: 'div', class: '%extra_class%' }
         ] },
         extra_chart_div: { inner: [
           { tag: 'button', class: '%extra_class%', inner: '%extra_inner%', title: '%extra_popup_title%' },
@@ -904,10 +905,10 @@
         }
 
         // insert extra input 
-        const extra_inputs = main_elem.querySelector( '.extra_inputs' );
-        if ( self.extra_inputs ){
-          self.extra_inputs.forEach( extra_params => {
-            if ( typeof extra_params === "string" ){
+        const extra_inputs = main_elem.querySelector('.extra_inputs');
+        if (self.extra_inputs) {
+          self.extra_inputs.forEach(extra_params => {
+            if (typeof extra_params === "string") {
               const extra_string = extra_params;
               extra_params = {
                 "extra_class": extra_string,
@@ -915,18 +916,29 @@
                 "extra_popup_title": extra_string
               };
             }
-            const extra_sub_div = $.html( self.html.extra_input_div, extra_params );
-            extra_inputs.appendChild( extra_sub_div );
-            const extra_input = extra_sub_div.querySelector('input');
-            const extra_buttoninp = extra_sub_div.querySelector('button');
-            const extra_span = extra_sub_div.querySelector('span');
-            extra_buttoninp.addEventListener('click', async function( e ){
-              if ( extra_buttoninp.classList.contains( 'start' ) ){
-                if ( extra_buttoninp.classList.length > 1 ) extra_buttoninp.classList.remove( 'start' );
-                await csv_get_request( extra_buttoninp.classList.toString().replaceAll(/\s/g,'_'), { name: self.name, time: extra_input.inner }, extra_span );
-                setTimeout( _=>{ stop(); self.start() }, 800 );
-              } else {
-                await csv_get_request( extra_params.extra_class, { name: self.name }, extra_span );
+            const extra_sub_div = $.html(self.html.extra_input_div, extra_params);
+            extra_inputs.appendChild(extra_sub_div);
+            const extra_inp_start = extra_sub_div.querySelector('input');
+            const extra_inp_end = extra_sub_div.querySelector('input');
+            const extra_btn = extra_sub_div.querySelector('button');
+            const extra_div = extra_sub_div.querySelector('div');
+            extra_btn.addEventListener('click', async function (e) {
+              let config;
+              try {
+                let response = await csv_get_request(extra_params.extra_class, { name: self.name, starttime: extra_inp_start.value, endtime: extra_inp_end.value });
+                if (response) {
+                  try {
+                    config = JSON.parse(response);
+                    config.root = extra_div;
+                    self.chart.start(config);
+                  } catch (err2) {
+                    console.log(err2, " in HTTP Response: ", response);
+                  }
+                } else {
+                  console.log('No HTTP-GET handler for ' + extra_params.extra_class);
+                }
+              } catch (err1) {
+                show_error("GET " + extra_params.extra_class + ": " + err1.toString() + "<br>" + response)
               }
             });
           });
