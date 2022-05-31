@@ -89,8 +89,8 @@
           { tag: 'span', class: '%extra_class%' }
         ] },
         extra_input_div: { inner: [
-          { tag: 'input', class: '%extra_class%', type: 'text', placeholder: 'Start time ISO formatted' },
-          { tag: 'input', class: '%extra_class%', type: 'text', placeholder: 'End time ISO formatted' },
+          { tag: 'input', class: '%extra_class%', type: 'datetime-local'},
+          { tag: 'input', class: '%extra_class%', type: 'datetime-local'},
           { tag: 'button', class: '%extra_class%', inner: '%extra_inner%', title: '%extra_popup_title%' },
           { tag: 'div', class: '%extra_class%' }
         ] },
@@ -919,7 +919,7 @@
             const extra_sub_div = $.html(self.html.extra_input_div, extra_params);
             extra_inputs.appendChild(extra_sub_div);
             const extra_inp_start = extra_sub_div.querySelector('input');
-            const extra_inp_end = extra_sub_div.querySelector('input');
+            const extra_inp_end = extra_sub_div.querySelector('input+input');
             const extra_btn = extra_sub_div.querySelector('button');
             const extra_div = extra_sub_div.querySelector('div');
             extra_btn.addEventListener('click', async function (e) {
@@ -1061,7 +1061,7 @@
           if ( self.server_url ){
             const request = new Request( self.server_url
               + '?cmd=' + command
-              + Object.entries( params ).map(([key, value])=>'&'+key+'='+value).join()
+              + Object.entries( params ).map(([key, value])=>'&'+key+'='+value).join("")
             );
             console.log( request );
             try {
