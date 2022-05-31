@@ -1040,7 +1040,7 @@
               license: car.license,
               color: car.color(),
               space: car.space,
-              preis: ' € ' + ( car.price() / 100 ).toFixed(2) }
+              preis: " \u20AC " + ( car.price() / 100 ).toFixed(2) }
             )
           );
         }
